@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Statue Trails</title>
+    <!-- Link to Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <!-- Link to Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+    integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
+    crossorigin=""/>
+    <!-- Make sure you put this AFTER Leaflet's CSS -->
+ <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
+ integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
+ crossorigin=""></script>
+
+ <style>
+    #map {
+      height: 50vh; /* Set the height to 50% of the viewport height */
+    }
+  </style>
+  </head>
+  <body>
+   
+    <header class="bg-light">
+      <div class="container">
+        <h1 class="text-center my-4">Statue Trails</h1>
+      </div>
+    </header>
+    <main class="container my-5">
+      <p class="lead text-center mb-5">Find your way to the most iconic statues in the world.</p>
+      <div class="row justify-content-center">
+        <div id="map" class="col-md-8"></div>
+      </div>
+    </main>
+    <footer class="bg-dark text-light py-3">
+      <div class="container text-center">
+        <p>&copy; 2023 Statue Trails. All rights reserved.</p>
+      </div>
+    </footer>
+    <!-- Link to Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script>
+      // Create a Leaflet map centered on Perth, Scotland
+      var map = L.map('map').setView([56.3952, -3.434], 13);
+
+
+      // Add a tile layer to the map using OpenStreetMap data
+      L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+}).addTo(map);
+
+
+    // Create markers for two locations
+    var statue1 = L.marker([56.3944, -3.4327]).bindPopup("This is Statue 1.");
+    var statue2 = L.marker([56.3978, -3.4334]).bindPopup("This is Statue 2.");
+
+// Add markers to the map
+    statue1.addTo(map);
+    statue2.addTo(map);
+
+
+    </script>
+  </body>
+</html>
