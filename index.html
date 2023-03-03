@@ -9,6 +9,9 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
     integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
     crossorigin=""/>
+
+    <script src="https://cdn.jsdelivr.net/npm/geolib/dist/geolib.min.js"></script>
+
     <!-- Make sure you put this AFTER Leaflet's CSS -->
  <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
  integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
@@ -28,7 +31,7 @@
       </div>
     </header>
     <main class="container my-5">
-      <p class="lead text-center mb-5">Find your way to the most iconic statues in the world.</p>
+      <p class="lead text-center mb-5">Find all the Highland Cow statues!</p>
       <div class="row justify-content-center">
         <div id="map" class="col-md-8"></div>
       </div>
@@ -47,6 +50,31 @@
       var map = L.map('map').setView([56.3952, -3.434], 13);
 
 
+
+      // Define a random distance between 0 and 200 meters
+function getRandomDistance() {
+  return Math.random() * 2500;
+}
+
+// Define a random bearing between 0 and 360 degrees
+function getRandomBearing() {
+  return Math.random() * 360;
+}
+
+// Define the center point of the markers
+var center = [56.3944, -3.4327];
+var centerReversed = [-3.4327,56.3944];
+
+// Create an array of 10 random markers around the center point
+var markers = [];
+for (var i = 0; i < 10; i++) {
+  var distance = getRandomDistance();
+  var bearing = getRandomBearing();
+  var latlng = geolib.computeDestinationPoint(centerReversed, distance, bearing);
+  markers.push([latlng.latitude, latlng.longitude]);
+}
+
+
       // Add a tile layer to the map using OpenStreetMap data
       L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19,
@@ -55,12 +83,53 @@
 
 
     // Create markers for two locations
-    var statue1 = L.marker([56.3944, -3.4327]).bindPopup("This is Statue 1.");
-    var statue2 = L.marker([56.3978, -3.4334]).bindPopup("This is Statue 2.");
+  /*   var statue1 = L.marker(markers[0]).bindPopup("This is marker.");
+    var statue2 = L.marker(markers[1]).bindPopup("This is another marker.");
 
 // Add markers to the map
     statue1.addTo(map);
-    statue2.addTo(map);
+    statue2.addTo(map); */
+
+
+
+/*     // Create a polygon to highlight an area
+var polygon = L.polygon([
+  [56.398, -3.42],
+  [56.405, -3.423],
+  [56.403, -3.440],
+  [56.397, -3.443]
+], {color: 'red', fillOpacity: 0.2}).addTo(map);
+
+// Create a circle to mark a location
+var circle = L.circle([56.397, -3.425], {
+  color: 'blue',
+  fillColor: '#00f',
+  fillOpacity: 0.3,
+  radius: 50 // in meters
+}).addTo(map);
+ */
+
+
+// Create a custom marker icon
+var customIcon = L.icon({
+  iconUrl: 'cow.png',
+  iconSize: [40, 40],
+  iconAnchor: [20, 40],
+  popupAnchor: [0, -40]
+});
+
+// Create a marker with the custom icon
+
+for (var i = 2; i < markers.length; i++) {
+  var marker = L.marker(markers[i], { icon: customIcon }).addTo(map);
+
+// Bind a popup to the marker
+marker.bindPopup("This is a marker with a custom icon.");
+
+marker.addTo(map);
+}
+
+
 
 
     </script>
